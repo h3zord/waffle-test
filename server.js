@@ -17,6 +17,11 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ message: 'Webhook recebido com sucesso!' }));
         });
 
+    } else if (req.method === 'GET' && req.url === '/test') {
+        // Endpoint de teste
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('hello world');
+    
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Endpoint não encontrado' }));
