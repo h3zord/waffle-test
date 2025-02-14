@@ -19,6 +19,8 @@ const server = http.createServer((req, res) => {
 
     } else if (req.method === 'GET' && req.url === '/test') {
         // Endpoint de teste
+        console.log("hey there");
+        
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end('hello world');
     
