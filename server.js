@@ -17,12 +17,21 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ message: 'Webhook recebido com sucesso!' }));
         });
 
-    } else if (req.method === 'GET' && req.url === '/test') {
-        // Endpoint de teste
-        console.log("hey there");
-        
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('hello world');
+    } else if (req.method === 'GET') {
+        let body = '';
+
+        // Captura os dados recebidos
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            console.log('📩 Webhook recebido:', body);
+            
+            // Retorna uma resposta para confirmar o recebimento
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Webhook recebido com sucesso!' }));
+        });
     
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
