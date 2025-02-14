@@ -1,7 +1,7 @@
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-    if (req.method === 'POST' && req.url === '/') {
+    if (req.method === 'POST') {
         let body = '';
 
         // Captura os dados recebidos
