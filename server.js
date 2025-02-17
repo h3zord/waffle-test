@@ -19,14 +19,6 @@ const server = http.createServer((req, res) => {
         const parsedUrl = url.parse(req.url, true); // Faz o parsing da URL
         const queryParams = parsedUrl.query; // Captura todos os parâmetros da query string
 
-        // Exibe todos os parâmetros da query (incluindo as variáveis UTM)
-        console.log('🔍 Parâmetros UTM recebidos:');
-        for (const param in queryParams) {
-            if (queryParams.hasOwnProperty(param)) {
-                console.log(`${param}: ${queryParams[param]}`);
-            }
-        }
-
         let body = '';
 
         req.on('data', chunk => {
