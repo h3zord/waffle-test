@@ -17,10 +17,15 @@ const server = http.createServer((req, res) => {
 
     } else if (req.method === 'GET') {
         const parsedUrl = url.parse(req.url, true); // Faz o parsing da URL
-        const email = parsedUrl.query.email; // Captura o parâmetro "email"
-        const id = parsedUrl.query.id; // Captura o parâmetro "id"
+        const queryParams = parsedUrl.query; // Captura todos os parâmetros da query string
 
-        console.log(`🔍 Parâmetros recebidos: email=${email}, id=${id}`);
+        // Exibe todos os parâmetros da query (incluindo as variáveis UTM)
+        console.log('🔍 Parâmetros UTM recebidos:');
+        for (const param in queryParams) {
+            if (queryParams.hasOwnProperty(param)) {
+                console.log(`${param}: ${queryParams[param]}`);
+            }
+        }
 
         let body = '';
 
@@ -29,12 +34,12 @@ const server = http.createServer((req, res) => {
         });
 
         console.log('📩 Webhook recebido:', body);
+        console.log('📩 query params:', queryParams);
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ 
             message: 'Webhook recebido com sucesso!',
-            email: email || 'Não informado',
-            id: id || 'Não informado'
+            utm_params: queryParams // Retorna todos os parâmetros UTM recebidos
         }));
 
     } else {
